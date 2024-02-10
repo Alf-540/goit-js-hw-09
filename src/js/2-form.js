@@ -1,13 +1,13 @@
-const STORAGE_KEY = '"feedback-form-state"'
+const STORAGE_KEY = 'feedback-form-state'
 const form = document.querySelector('.feedback-form');
 
 form.addEventListener('input', () => {
-    const userMail = form.elements.email.value;
-    const userText = form.elements.message.value;
+    const email = form.elements.email.value;
+    const message = form.elements.message.value;
 
     const data = {
-        mail: userMail,
-        text: userText,
+        email,
+        message,
     }
     
     saveInLS(STORAGE_KEY, data);
@@ -29,9 +29,9 @@ function saveInLS(key, value) {
 }
 
 function loadData() {
-    const {mail, text} = loadFromLS(STORAGE_KEY) || {};
-    form.elements.email.value = mail || '';
-    form.elements.message.value = text || '';
+    const {email, message} = loadFromLS(STORAGE_KEY) || {};
+    form.elements.email.value = email || '';
+    form.elements.message.value = message || '';
 }
 
 loadData();
@@ -39,13 +39,13 @@ loadData();
 form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    if (form.elements.email.value && form.elements.message.value !== "") {
+    if (form.elements.email.value && form.elements.message.value !== '') {
         const data = loadFromLS(STORAGE_KEY) || {};
         localStorage.removeItem(STORAGE_KEY);
         form.reset();
         const sendData = {
-            email: data.mail,
-            message: data.text,
+            email: data.email,
+            message: data.message,
         }
         console.log(sendData);
     } else {
